@@ -16,6 +16,8 @@ class GaussianEliminator(object):
         print(ideal_matrix)
 
     def getIdealMatrix(self, equations):
+        if self.isZeroVector(equations[0]):
+            return self.getIdealMatrix(equations[1:])
         ideal_matrix = [equations[0]]
         for i in range(1, len(equations)):
             if self.checkMatrixLinearIndependence(ideal_matrix, equations[i]):
@@ -39,6 +41,12 @@ class GaussianEliminator(object):
     def checkMatrixLinearIndependence(self, matrix, vector):
         for v in matrix:
             if not self.isLinearlyIndependent(v, vector):
+                return False
+        return True
+
+    def isZeroVector(self, vector):
+        for i in range(len(vector)):
+            if vector[i] != 0:
                 return False
         return True
 
@@ -69,9 +77,11 @@ def test(): #should probably implement a check to make sure its a square matrix
     gauss = GaussianEliminator()
 
     A = [
+        [0, 0],
         [1, 2],
         [5, 6],
-        [10, 12]]
+        [10, 12],
+        [0, 0]]
 
     y = [8, 10]
     print(gauss.solve_system(A, y))
