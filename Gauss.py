@@ -1,3 +1,4 @@
+#Important note: vectors are represented by Python lists. Matrices are 2d Lists.
 import numpy as np
 
 
@@ -38,12 +39,14 @@ class GaussianEliminator(object):
     def checkOthers(self, parameters, remaining_equations, solutions):
         return None
 
+    #checks if matrix's rows are linearly independent with the given vector
     def checkMatrixLinearIndependence(self, matrix, vector):
         for v in matrix:
             if not self.isLinearlyIndependent(v, vector):
                 return False
         return True
 
+    #checks if a given vector is the zero vector or not
     def isZeroVector(self, vector):
         for i in range(len(vector)):
             if vector[i] != 0:
