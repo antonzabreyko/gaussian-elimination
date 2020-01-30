@@ -26,9 +26,21 @@ class GaussianEliminator(object):
 
     #checks to see if 2 vectors are linearly independent or not
     def isLinearlyIndependent(self, vector1, vector2):
-        const = vector1[0]/vector2[0]
+        if len(vector1) != len(vector2):
+            return True
+        if len(vector1) == 0:
+            return False
+
+        try:
+            const = vector1[0]/vector2[0]
+        except ZeroDivisionError:
+            return self.isLinearlyIndependent(vector1[1:], vector2[1:])
+
         for i in range(1, len(vector1)):
-            if const != vector1[i]/vector2[i]:
+            try:
+                if const != vector1[i]/vector2[i]:
+                    return True
+            except ZeroDivisionError:
                 return True
         return False
 
@@ -43,5 +55,5 @@ def test(): #should probably implement a check to make sure its a square matrix
 
     y = [8, 10]
     #print(gauss.solve_system(A, y))
-    print(gauss.isLinearlyIndependent([1, 2, 3], [4, 5, 6]))
+    print(gauss.isLinearlyIndependent([5, 4, 0], [0, 1, 0]))
 test()
