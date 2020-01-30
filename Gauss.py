@@ -9,7 +9,19 @@ class GaussianEliminator(object):
     #equations is an nxn list containing the values for the parameters of the equations
     #solutions is an 1xn list containing the solutions to each of the equations
     def solve_system(self, equations, solutions):
-        return checkPrereqs(equations)
+        #assert len(solutions) <= len(equations), "Not enough equations to compute definite answer" ---> add this to checkPrereqs
+
+        ideal_matrix = self.getIdealMatrix(equations)
+
+        print(ideal_matrix)
+
+    def getIdealMatrix(self, equations):
+        ideal_matrix = [equations[0]]
+        for i in range(1, len(equations)):
+            if self.checkMatrixLinearIndependence(ideal_matrix, equations[i]):
+                ideal_matrix.append(equations[i])
+
+        return ideal_matrix
 
     #check that the matrix has the minimum number of linearly independent rows
     def checkPrereqs(self, equations):
@@ -23,6 +35,12 @@ class GaussianEliminator(object):
 
     def checkOthers(self, parameters, remaining_equations, solutions):
         return None
+
+    def checkMatrixLinearIndependence(self, matrix, vector):
+        for v in matrix:
+            if not self.isLinearlyIndependent(v, vector):
+                return False
+        return True
 
     #checks to see if 2 vectors are linearly independent or not
     def isLinearlyIndependent(self, vector1, vector2):
@@ -52,9 +70,9 @@ def test(): #should probably implement a check to make sure its a square matrix
 
     A = [
         [1, 2],
-        [5, 6]]
+        [5, 6],
+        [10, 12]]
 
     y = [8, 10]
-    #print(gauss.solve_system(A, y))
-    print(gauss.isLinearlyIndependent([5, 4, 0], [0, 1, 0]))
+    print(gauss.solve_system(A, y))
 test()
