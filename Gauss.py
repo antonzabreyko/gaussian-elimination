@@ -26,17 +26,18 @@ class GaussianEliminator(object):
 
     #checks to see if 2 vectors are linearly independent or not
     def isLinearlyIndependent(self, vector1, vector2):
-        if len(vector1) != len(vector2):
+        if len(vector1) != len(vector2): #in this problem, two vectors of non-equivalent length are defined as being linearly independent
             return True
-        if len(vector1) == 0:
+
+        if len(vector1) == 0: #generally this will only be encountered in recursion, if one of the vectors is the zero vector
             return False
 
-        try:
+        try: #try to get a constant for testing linear independence
             const = vector1[0]/vector2[0]
         except ZeroDivisionError:
             return self.isLinearlyIndependent(vector1[1:], vector2[1:])
 
-        for i in range(1, len(vector1)):
+        for i in range(1, len(vector1)): #iterate through each index and see if any of them demonstrate linear independence
             try:
                 if const != vector1[i]/vector2[i]:
                     return True
