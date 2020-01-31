@@ -1,5 +1,4 @@
 #Important note: vectors are represented by Python lists. Matrices are 2d Lists.
-import numpy as np
 
 
 class GaussianEliminator(object):
@@ -7,7 +6,7 @@ class GaussianEliminator(object):
     def __init__(self):
         self.place_holder = None
 
-    #equations is an nxn list containing the values for the parameters of the equations
+    #equations is an mxn list containing the values for the parameters of the equations
     #solutions is an 1xn list containing the solutions to each of the equations
     def solve_system(self, equations, solutions):
         #assert len(solutions) <= len(equations), "Not enough equations to compute definite answer" ---> add this to checkPrereqs
@@ -15,6 +14,7 @@ class GaussianEliminator(object):
         ideal_matrix = self.getIdealMatrix(equations)
 
         print(ideal_matrix)
+        print(self.checkPrereqs(ideal_matrix))
 
     def getIdealMatrix(self, equations):
         if self.isZeroVector(equations[0]):
@@ -28,7 +28,7 @@ class GaussianEliminator(object):
 
     #check that the matrix has the minimum number of linearly independent rows
     def checkPrereqs(self, equations):
-        return None
+        return len(equations) >= len(equations[0])
 
     def pre_processMatrix(self, equations):
         return None
