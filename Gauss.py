@@ -12,11 +12,17 @@ class GaussianEliminator(object):
         #assert len(solutions) <= len(equations), "Not enough equations to compute definite answer" ---> add this to checkPrereqs
 
         ideal_matrix = self.getIdealMatrix(equations)
-
+        ideal_solutions = self.getIdealSolutions(equations, ideal_matrix, solutions)
         print(ideal_matrix)
-        print(self.checkPrereqs(ideal_matrix))
+        print(ideal_solutions)
+
+        if self.checkPrereqs(ideal_matrix):
+            return "I am a cat"
+
+        return "Cannot solve"
 
     def getIdealMatrix(self, equations):
+        removed_indices = []
         if self.isZeroVector(equations[0]):
             return self.getIdealMatrix(equations[1:])
         ideal_matrix = [equations[0]]
@@ -26,12 +32,20 @@ class GaussianEliminator(object):
 
         return ideal_matrix
 
+    #Return a vector of filtered solutions.
+    def getIdealSolutions(self, equations, ideal_matrix, solutions):
+        ideal_solutions = []
+        for i in range(len(equations)):
+            if equations[i] in ideal_matrix:
+                ideal_solutions.append(solutions[i])
+        return ideal_solutions
+
     #check that the matrix has the minimum number of linearly independent rows
     def checkPrereqs(self, equations):
         return len(equations) >= len(equations[0])
 
-    def pre_processMatrix(self, equations):
-        return None
+    def processMatrix(self, matrix):
+        return matrix[0:]
 
     def solveIdealMatrix(self, equations, solutions):
         return None
@@ -86,6 +100,6 @@ def test(): #should probably implement a check to make sure its a square matrix
         [10, 12],
         [0, 0]]
 
-    y = [8, 10]
+    y = [0, 8, 10, 20, 0]
     print(gauss.solve_system(A, y))
 test()
