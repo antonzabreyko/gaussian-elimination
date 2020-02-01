@@ -47,8 +47,18 @@ class GaussianEliminator(object):
     def processMatrix(self, matrix):
         return matrix[0:]
 
+
+    #Takes in an ideal nxn matrix, and solves it using Gaussian elimination.
     def solveIdealMatrix(self, equations, solutions):
-        return None
+        for i in range(len(equations)-1):
+            for j in range(1, len(equations)):
+                try:
+                    scale_factor = equations[j][i]/equations[i][i]
+                    equations[j][i] = equations[j][i] - equations[i][i] * scale_factor
+                    solutions[j] = solutions[j] - solutions[i] * scale_factor 
+                except ZeroDivisionError:
+                    continue
+
 
     def checkOthers(self, parameters, remaining_equations, solutions):
         return None
