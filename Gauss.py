@@ -16,8 +16,10 @@ class GaussianEliminator(object):
         print(ideal_matrix)
         print(ideal_solutions)
 
-        if self.checkPrereqs(ideal_matrix):
-            return "I am a cat"
+        if self.checkPrereqs(ideal_matrix): #'''Step needs to be added to make sure that there is non-zero in all [i][i] indices'''
+            self.solveIdealMatrix(ideal_matrix, ideal_solutions)
+            print(ideal_solutions)
+            return
 
         return "Cannot solve"
 
@@ -55,9 +57,22 @@ class GaussianEliminator(object):
                 try:
                     scale_factor = equations[j][i]/equations[i][i]
                     equations[j][i] = equations[j][i] - equations[i][i] * scale_factor
-                    solutions[j] = solutions[j] - solutions[i] * scale_factor 
+                    solutions[j] = solutions[j] - solutions[i] * scale_factor
                 except ZeroDivisionError:
                     continue
+
+        for i in range(len(equations)-1, 0):
+            scale_factor = equations[i][i]/equations[i][i]
+            equations[i][i] /= scale_factor
+            solutions[i] /= scale_factor
+            for j in range(i, 0):
+                try:
+                    scale_factor = equations[j][i]/equations[i][i]
+                    equations[j][i] = equations[j][i] - equations[i][i] * scale_factor
+                    solutions[j][i] = solutions[j] - solutions[i] * scale_factor
+                except ZeroDivisionError:
+                    continue
+        return solutions
 
 
     def checkOthers(self, parameters, remaining_equations, solutions):
