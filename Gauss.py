@@ -56,10 +56,16 @@ class GaussianEliminator(object):
             for j in range(1, len(equations)):
                 try:
                     scale_factor = equations[j][i]/equations[i][i]
-                    equations[j][i] = equations[j][i] - equations[i][i] * scale_factor
+                    print(scale_factor)
+                    for k in range(len(equations)):
+                        print(equations[j][k])
+                        equations[j][k] = equations[j][k] - equations[i][k] * scale_factor
+                        print(equations[j][k])
                     solutions[j] = solutions[j] - solutions[i] * scale_factor
                 except ZeroDivisionError:
                     continue
+        print("cat", equations)
+        print(solutions)
 
         for i in range(len(equations)-1, 0, -1):
             print('helllooo!')
