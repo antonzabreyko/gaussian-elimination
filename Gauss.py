@@ -31,8 +31,7 @@ class GaussianEliminator(object):
         for i in range(1, len(equations)):
             if self.checkMatrixLinearIndependence(ideal_matrix, equations[i]):
                 ideal_matrix.append(equations[i])
-
-        return ideal_matrix
+        return ideal_matrix[:len(ideal_matrix[0])]
 
     #Return a vector of filtered solutions.
     def getIdealSolutions(self, equations, ideal_matrix, solutions):
@@ -58,17 +57,13 @@ class GaussianEliminator(object):
                     scale_factor = equations[j][i]/equations[i][i]
                     print(scale_factor)
                     for k in range(len(equations)):
-                        print(equations[j][k])
                         equations[j][k] = equations[j][k] - equations[i][k] * scale_factor
-                        print(equations[j][k])
                     solutions[j] = solutions[j] - solutions[i] * scale_factor
                 except ZeroDivisionError:
                     continue
-        print("cat", equations)
-        print(solutions)
+
 
         for i in range(len(equations)-1, 0, -1):
-            print('helllooo!')
             scale_factor = 1/equations[i][i]
             equations[i][i] *= scale_factor
             solutions[i] *= scale_factor
@@ -79,7 +74,6 @@ class GaussianEliminator(object):
                     solutions[j] = solutions[j] - solutions[i] * scale_factor
                 except ZeroDivisionError:
                     continue
-        print(equations)
         return solutions
 
 
@@ -131,8 +125,9 @@ def test(): #should probably implement a check to make sure its a square matrix
         [1, 2],
         [5, 6],
         [10, 12],
+        [4, 5],
         [0, 0]]
 
-    y = [0, 8, 10, 20, 0]
+    y = [0, 8, 10, 20, 2, 0]
     print(gauss.solve_system(A, y))
 test()
