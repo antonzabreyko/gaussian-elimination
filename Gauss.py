@@ -11,6 +11,9 @@ class GaussianEliminator(object):
     def solve_system(self, equations, solutions):
         #assert len(solutions) <= len(equations), "Not enough equations to compute definite answer" ---> add this to checkPrereqs
 
+        if not self.checkValidSystem(equations):
+            return"Cannot solve"
+
         ideal_matrix = copy.deepcopy(self.getIdealMatrix(equations))
         ideal_solutions = self.getIdealSolutions(equations, ideal_matrix, solutions)
         #rint(equations)
@@ -23,6 +26,15 @@ class GaussianEliminator(object):
                 return ideal_solutions
 
         return "Cannot solve"
+
+    def checkValidSystem(self, equations):
+        if len(equations):
+            num_variables = len(equations[0])
+            for i in range(1, len(equations)):
+                if len(equations[i]) != num_variables:
+                    return False
+            return True
+        return False
 
     def getIdealMatrix(self, equations):
         removed_indices = []
