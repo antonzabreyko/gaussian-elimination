@@ -13,15 +13,14 @@ class GaussianEliminator(object):
 
         ideal_matrix = copy.deepcopy(self.getIdealMatrix(equations))
         ideal_solutions = self.getIdealSolutions(equations, ideal_matrix, solutions)
-        print(equations)
-        print(ideal_matrix)
-        #print(ideal_solutions)
+        #rint(equations)
+        #print(ideal_matrix)
 
         if self.checkPrereqs(ideal_matrix): #'''Step needs to be added to make sure that there is non-zero in all [i][i] indices'''
             self.solveIdealMatrix(ideal_matrix, ideal_solutions)
             #print(ideal_solutions)
-            print(self.checkSolutions(equations, solutions, ideal_solutions))
-            return
+            if self.checkSolutions(equations, solutions, ideal_solutions):
+                return ideal_solutions
 
         return "Cannot solve"
 
@@ -57,7 +56,7 @@ class GaussianEliminator(object):
             for j in range(1, len(equations)):
                 try:
                     scale_factor = equations[j][i]/equations[i][i]
-                    print(scale_factor)
+                    #print(scale_factor)
                     for k in range(len(equations)):
                         equations[j][k] = equations[j][k] - equations[i][k] * scale_factor
                     solutions[j] = solutions[j] - solutions[i] * scale_factor
@@ -85,7 +84,7 @@ class GaussianEliminator(object):
             for j in range(len(matrix[i])):
                 sum+= matrix[i][j] * solutions[j]
             if sum != answers[i]:
-                print(sum, answers[i])
+                #print(sum, answers[i])
                 return False
         return True
 
@@ -137,6 +136,6 @@ def test(): #should probably implement a check to make sure its a square matrix
         [4, 5],
         [0, 0]]
 
-    y = [0, 8, 10, 20, 2.5, 0]
+    y = [0, 8, 10, 20, 9.5, 0]
     print(gauss.solve_system(A, y))
 test()
