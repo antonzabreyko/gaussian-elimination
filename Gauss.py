@@ -12,20 +12,17 @@ class GaussianEliminator(object):
         #assert len(solutions) <= len(equations), "Not enough equations to compute definite answer" ---> add this to checkPrereqs
 
         if not self.checkValidSystem(equations):
-            return"Cannot solve"
+            return "Error: Not enough equations to solve system"
 
         ideal_matrix = copy.deepcopy(self.getIdealMatrix(equations))
         ideal_solutions = self.getIdealSolutions(equations, ideal_matrix, solutions)
-        #rint(equations)
-        #print(ideal_matrix)
 
         if self.checkPrereqs(ideal_matrix): #'''Step needs to be added to make sure that there is non-zero in all [i][i] indices'''
             self.solveIdealMatrix(ideal_matrix, ideal_solutions)
-            #print(ideal_solutions)
             if self.checkSolutions(equations, solutions, ideal_solutions):
                 return ideal_solutions
 
-        return "Cannot solve"
+        return "Error: Cannot solve"
 
     def checkValidSystem(self, equations):
         if len(equations):
@@ -68,7 +65,6 @@ class GaussianEliminator(object):
             for j in range(1, len(equations)):
                 try:
                     scale_factor = equations[j][i]/equations[i][i]
-                    #print(scale_factor)
                     for k in range(len(equations)):
                         equations[j][k] = equations[j][k] - equations[i][k] * scale_factor
                     solutions[j] = solutions[j] - solutions[i] * scale_factor
@@ -96,7 +92,6 @@ class GaussianEliminator(object):
             for j in range(len(matrix[i])):
                 sum+= matrix[i][j] * solutions[j]
             if sum != answers[i]:
-                #print(sum, answers[i])
                 return False
         return True
 
