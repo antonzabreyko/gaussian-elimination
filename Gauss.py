@@ -4,7 +4,7 @@ in which the system can be solved using the algorithm.
 @author Anton A. Zabreyko'''
 
 import numpy as np
-'''Object storing the static method.'''
+'''Object storing the implementation.'''
 class GaussElim(object):
 
     '''Main method that handles the Gaussian Elimination procedure. '''
@@ -12,6 +12,8 @@ class GaussElim(object):
     def solveSystem(equations, solutions):
         if not GaussElim.__prelims__(equations, solutions):
             return
+
+        __ideal__(equations)
 
 
 
@@ -21,7 +23,7 @@ class GaussElim(object):
         try:
             assert equations.shape[1] == solutions.shape[1]
         except AssertionError as e:
-            print("Mistmatch: {0} equation(s), {1} solution(s)".format(equations.shape[1], solutions.shape[1]))
+            print("Mismatch: {0} equation(s), {1} solution(s)".format(equations.shape[1], solutions.shape[1]))
             return False
         return True
 
@@ -29,8 +31,8 @@ class GaussElim(object):
     @staticmethod
     def __ideal__(equations):
         ideal_matrix = equations[0]
-        for i in range(1, ideal_matrix.shape[0]):
-            if np.linalg.lstsq()
+        for i in range(1, equations.shape[0]):
+            print(np.linalg.lstsq(ideal_matrix, equations[i])[1])
 
 
 
