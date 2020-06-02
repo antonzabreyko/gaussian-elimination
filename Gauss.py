@@ -13,7 +13,7 @@ class GaussElim(object):
         if not GaussElim.__prelims__(equations, solutions):
             return
 
-        __ideal__(equations)
+        GaussElim.__ideal__(equations)
 
 
 
@@ -32,13 +32,21 @@ class GaussElim(object):
     def __ideal__(equations):
         ideal_matrix = equations[0]
         for i in range(1, equations.shape[0]):
-            print(np.linalg.lstsq(ideal_matrix, equations[i])[1])
+            print(__lstsq(A, y))
+
+    ''' An implementation of least squares that does not fail for the vector case. '''
+    @staticmethod
+    def __lstsq__(A, y):
+        if A.shape[1] == 1:
+            return np.dot(A, y) / (np.linalg.norm(A) ** 2)
+        else:
+            return np.linalg.lstsq(A, y)[1]
 
 
 
 def test():
     equations = np.array([[1, 2], [5, 6]])
-    solutions = np.array([[3, 11, 10]])
+    solutions = np.array([[3, 11]])
     print(GaussElim.solveSystem(equations, solutions))
 
 test()
