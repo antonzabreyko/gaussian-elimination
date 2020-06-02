@@ -34,7 +34,7 @@ class GaussElim(object):
         for i in range(1, equations.shape[0]):
             factors = GaussElim.__lstsq__(ideal_matrix, equations[i])
             if GaussElim.__zero__(np.dot(ideal_matrix, factors) - equations[i]):
-                ideal_matrix 
+                ideal_matrix = np.hstack((ideal_matrix, equations[i]))
 
     '''Checks to see if vector is approximately equal to the zero vector.
         This is needed to deal with Python's approximations. '''
